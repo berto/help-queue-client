@@ -1,8 +1,8 @@
 import React from 'react'
-import { Card, Icon, Button } from 'semantic-ui-react'
+import { Card, Icon, Button, Label } from 'semantic-ui-react'
 
 const CardExampleExtraContent = ({ question }) => {
-  const { name, location, googled, askedStudent, hasDebugged  } = question
+  const { name, location, googled, askedStudent, hasDebugged } = question
   
   return (
     <Card>
@@ -12,8 +12,16 @@ const CardExampleExtraContent = ({ question }) => {
         {googled ? <Icon circular color='teal' name='google' /> : <Icon circular name='google' />}
         {askedStudent ? <Icon circular color='teal' name='talk' /> : <Icon circular name='talk' />}
         {hasDebugged ? <Icon circular color='teal' name='bug' /> : <Icon circular name='bug' />}
-        <Button compact floated="right">Contacted</Button>
-        <Button compact floated="right">Completed</Button>
+        <Button.Group floated="right">
+          <Button compact icon labelPosition='left'>
+            <Icon name='right arrow' />
+            Contacted
+          </Button>
+          <Button compact icon color="teal" labelPosition='right'>
+            Completed
+            <Icon name='check' />
+          </Button>
+        </Button.Group>
       </Card.Content>
     </Card>
   )

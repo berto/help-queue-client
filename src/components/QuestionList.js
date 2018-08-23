@@ -8,12 +8,12 @@ const QuestionList = ({ questions }) => {
   const cards = questions.map(question => (<Question key={question.id} question={question} />))
 
   return (
-    <Segment>
+    <React.Fragment>
       <Header as="h2" content="Questions" />
       <Card.Group itemsPerRow={1}>
         {cards}
       </Card.Group>
-    </Segment>
+    </React.Fragment>
   )
 }
 
