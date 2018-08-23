@@ -12,19 +12,20 @@ class App extends Component {
   state = {
     activeMenuItem: 'Questions',
     totalQuestions: 0,
-    questions: []
+    questions: [],
+    isLoaded: false
   }
 
   componentDidMount() {
     fetch('/questions.json')
       .then(res => res.json())
-      .then(questions => this.setState({ questions: questions, totalQuestions: questions.length }))
+      .then(questions => this.setState({ questions: questions, totalQuestions: questions.length, isLoaded: true }))
   }
 
   handleMenuChange = (e, { name }) => this.setState({ activeMenuItem: name })
 
   render() {
-    const { activeMenuItem, totalQuestions, questions } = this.state
+    const { activeMenuItem, totalQuestions, questions, isLoaded } = this.state
 
     return (
       <div className="App">
@@ -35,7 +36,7 @@ class App extends Component {
             totalQuestions={totalQuestions}
             handleMenuChange={this.handleMenuChange}
           />
-          {questions.length ? <QuestionList questions={questions} /> : <Loader />}
+          {isLoaded ? <QuestionList questions={questions} /> : <Loader />}
         </Container>
       </div>
     );

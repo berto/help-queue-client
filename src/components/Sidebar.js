@@ -3,7 +3,7 @@ import { Label, Menu, Icon } from 'semantic-ui-react'
 
 class Sidebar extends Component {
   render() {
-    const { activeItem, totalQuestions, handleMenuChange } = this.props
+    const { activeItem, totalQuestions, handleMenuChange } = this.props        
 
     return (
       <Menu vertical>
