@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Label, Menu, Icon } from 'semantic-ui-react'
+import { Label, Menu, Icon } from 'semantic-ui-react'
 
 class Sidebar extends Component {
   render() {

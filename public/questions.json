@@ -1,0 +1,34 @@
+[
+  {
+    "name": "Matt",
+    "location": "CR1",
+    "question": "I'm somewhere where I don't know where I am!",
+    "googled": true,
+    "askedStudent": false,
+    "hasDebugged": true
+  },
+  {
+    "name": "Matt",
+    "location": "CR1",
+    "question": "JavaScript is haaaard.",
+    "googled": true,
+    "askedStudent": true,
+    "hasDebugged": false
+  },
+  {
+    "name": "Berto",
+    "location": "CR2",
+    "question": "What is an API????",
+    "googled": true,
+    "askedStudent": true,
+    "hasDebugged": true
+  },
+  {
+    "name": "Kyle",
+    "location": "CR3",
+    "question": "Does anyone here know Ember!?",
+    "googled": false,
+    "askedStudent": false,
+    "hasDebugged": true
+  }
+]

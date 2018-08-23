@@ -9,7 +9,14 @@ import Sidebar from './components/Sidebar'
 class App extends Component {
   state = {
     activeMenuItem: 'Questions',
-    totalQuestions: 5
+    totalQuestions: 0,
+    questions: []
+  }
+
+  componentDidMount() {
+    fetch('/questions.json')
+      .then(res => res.json())
+      .then(questions => this.setState({ questions: questions, totalQuestions: questions.length }))
   }
 
   handleMenuChange = (e, { name }) => this.setState({ activeMenuItem: name })
