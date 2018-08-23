@@ -1,8 +1,8 @@
 import React from 'react'
-import { Card, Icon, Button, Label } from 'semantic-ui-react'
+import { Card, Icon, Button } from 'semantic-ui-react'
 
-const CardExampleExtraContent = ({ question }) => {
-  const { name, location, googled, askedStudent, hasDebugged } = question
+const Question = ({ question, removeQuestion }) => {
+  const { id, name, location, googled, askedStudent, hasDebugged } = question
   
   return (
     <Card>
@@ -17,7 +17,7 @@ const CardExampleExtraContent = ({ question }) => {
             <Icon name='right arrow' />
             Contacted
           </Button>
-          <Button compact icon color="teal" labelPosition='right'>
+          <Button compact icon color="teal" labelPosition='right' onClick={() => {removeQuestion(id)}}>
             Completed
             <Icon name='check' />
           </Button>
@@ -26,4 +26,4 @@ const CardExampleExtraContent = ({ question }) => {
     </Card>
   )
 }
-export default CardExampleExtraContent
+export default Question
