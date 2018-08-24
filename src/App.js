@@ -7,13 +7,14 @@ import Header from './components/Header'
 import Sidebar from './components/Sidebar'
 import Loader from './components/Loader'
 import QuestionList from './components/QuestionList'
+import SubmitQuestion from './components/SubmitQuestion'
 
 // API
 const apiUrl = '/questions.json'
 
 class App extends Component {
   state = {
-    activeMenuItem: 'Questions',
+    activeMenuItem: 'Submit',
     totalQuestions: 0,
     questions: [],
     isLoaded: false,
@@ -49,6 +50,7 @@ class App extends Component {
             totalQuestions={totalQuestions}
             handleMenuChange={this.handleMenuChange}
           />
+          {activeMenuItem === "Submit" && <SubmitQuestion />}
           {isLoaded ? <QuestionList questions={questions} removeQuestion={this.removeQuestion}/> : <Loader />}
         </Container>
       </div>
