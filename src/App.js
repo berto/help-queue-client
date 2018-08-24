@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './App.css'
-import { Container } from 'semantic-ui-react'
+import { Container, Grid, GridColumn } from 'semantic-ui-react'
 
 // Components
 import Header from './components/Header'
@@ -14,7 +14,7 @@ const apiUrl = '/questions.json'
 
 class App extends Component {
   state = {
-    activeMenuItem: 'Submit',
+    activeMenuItem: 'Questions',
     totalQuestions: 0,
     questions: [],
     isLoaded: false,
@@ -40,19 +40,24 @@ class App extends Component {
 
   render() {
     const { activeMenuItem, totalQuestions, questions, isLoaded } = this.state
+    const { handleMenuChange, removeQuestion } = this
 
     return (
       <div className="App">
         <Header />
-        <Container>
-          <Sidebar 
-            activeItem={activeMenuItem}
-            totalQuestions={totalQuestions}
-            handleMenuChange={this.handleMenuChange}
-          />
-          {activeMenuItem === "Submit" && <SubmitQuestion />}
-          {isLoaded ? <QuestionList questions={questions} removeQuestion={this.removeQuestion}/> : <Loader />}
-        </Container>
+        <Grid stackable container>
+          <Grid.Column width={4}>
+            <Sidebar 
+              activeItem={activeMenuItem}
+              totalQuestions={totalQuestions}
+              handleMenuChange={handleMenuChange}
+            />
+          </Grid.Column>
+          <Grid.Column width={12}>
+            {activeMenuItem === "Submit" && <SubmitQuestion />}
+            {activeMenuItem === "Questions" && (isLoaded ? <QuestionList questions={questions} removeQuestion={removeQuestion}/> : <Loader />)}
+          </Grid.Column>
+        </Grid>
       </div>
     );
   }
