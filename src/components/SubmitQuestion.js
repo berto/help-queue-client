@@ -3,19 +3,28 @@ import { Header, Form, Segment, Checkbox } from 'semantic-ui-react'
 
 class SubmitQuestion extends Component {
   state = {
-    name: '',
-    location: '',
-    question: '',
-    googled: false,
-    askedStudent: false,
-    hasDebugged: false
+    // name: '',
+    // location: '',
+    // question: '',
+    // googled: false,
+    // askedStudent: false,
+    // hasDebugged: false
   }
 
   handleInputChange = (e) => this.setState({ [e.target.name]: e.target.value })
 
+  handleCheckboxChange = (e) => {
+    console.dir(e.target)
+    console.log('Value:', e.target.previousSibling.value)
+    console.log('Checked:', e.target.previousSibling.checked)
+    console.log('Name:', e.target.previousSibling.name)
+    this.setState({ [e.target.previousSibling.name]: !e.target.previousSibling.checked })
+
+  }
+
   render() {
     const { name, location, question, googled, askedStudent, hasDebugged } = this.state
-    const { handleInputChange } = this 
+    const { handleInputChange, handleCheckboxChange } = this 
 
     return (
       <Fragment>
@@ -49,14 +58,23 @@ class SubmitQuestion extends Component {
             />
             <Form.Group>
               <Checkbox 
-                label='Test'
-                name='test'
-                checked={this.state.test}
-                onChange={this.handleChange}
+                label='Googled'
+                name='googled'
+                checked={googled}
+                onChange={handleCheckboxChange}
               />
-              <Form.Checkbox label='Googled' />
-              <Form.Checkbox label='Asked Student' />
-              <Form.Checkbox label='Debugged' />
+              <Checkbox 
+                label='Asked Student'
+                name='askedStudent'
+                checked={askedStudent}
+                onChange={handleCheckboxChange}
+              />
+              <Checkbox 
+                label='Debugged'
+                name='hasDebugged'
+                checked={hasDebugged}
+                onChange={handleCheckboxChange}
+              />
             </Form.Group>
             <Form.Button>Submit</Form.Button>
           </Form>
