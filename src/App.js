@@ -14,7 +14,7 @@ const apiUrl = '/questions.json'
 
 class App extends Component {
   state = {
-    activeMenuItem: 'Questions',
+    activeMenuItem: 'Submit',
     totalQuestions: 0,
     questions: [],
     isLoaded: false,

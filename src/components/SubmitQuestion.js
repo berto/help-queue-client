@@ -1,18 +1,21 @@
 import React, { Component, Fragment } from 'react'
-import { Header, Form, Segment, Label } from 'semantic-ui-react'
+import { Header, Form, Segment, Checkbox } from 'semantic-ui-react'
 
-const options = [
-  { key: 'm', text: 'Male', value: 'male' },
-  { key: 'f', text: 'Female', value: 'female' },
-]
+class SubmitQuestion extends Component {
+  state = {
+    name: '',
+    location: '',
+    question: '',
+    googled: false,
+    askedStudent: false,
+    hasDebugged: false
+  }
 
-export class SubmitQuestion extends Component {
-  state = {}
-
-  handleChange = (e, { value }) => this.setState({ value })
+  handleInputChange = (e) => this.setState({ [e.target.name]: e.target.value })
 
   render() {
-    const { value } = this.state
+    const { name, location, question, googled, askedStudent, hasDebugged } = this.state
+    const { handleInputChange } = this 
 
     return (
       <Fragment>
@@ -20,38 +23,37 @@ export class SubmitQuestion extends Component {
         <Segment>
           <Form>
             <Form.Group widths='equal'>
-              <Form.Input fluid label='Name' placeholder='My name is...' />
-              <Form.Input fluid label='Location' placeholder='I am working...' />
+              <Form.Input
+                fluid
+                label='Name'
+                placeholder='My name is...'
+                name='name'
+                value={name}
+                onChange={handleInputChange}
+              />
+              <Form.Input
+                fluid
+                label='Location'
+                placeholder='I am working...'
+                name='location'
+                value={location}
+                onChange={handleInputChange}
+              />
             </Form.Group>
-            {/* <Form.Group inline>
-              <label>Location</label>
-              <Form.Radio
-                label='CR1'
-                value='cr1'
-                checked={value === 'cr1'}
-                onChange={this.handleChange}
-              />
-              <Form.Radio
-                label='CR2'
-                value='cr2'
-                checked={value === 'cr2'}
-                onChange={this.handleChange}
-              />
-              <Form.Radio
-                label='CR3'
-                value='cr3'
-                checked={value === 'cr3'}
-                onChange={this.handleChange}
-              />
-              <Form.Radio
-                label='OAC'
-                value='oac'
-                checked={value === 'oac'}
-                onChange={this.handleChange}
-              />
-            </Form.Group> */}
-            <Form.TextArea label='Question' placeholder='I am struggling with...' />
+            <Form.TextArea
+              label='Question'
+              placeholder='I am struggling with...'
+              name='question'
+              value={question}
+              onChange={handleInputChange}
+            />
             <Form.Group>
+              <Checkbox 
+                label='Test'
+                name='test'
+                checked={this.state.test}
+                onChange={this.handleChange}
+              />
               <Form.Checkbox label='Googled' />
               <Form.Checkbox label='Asked Student' />
               <Form.Checkbox label='Debugged' />
@@ -65,3 +67,43 @@ export class SubmitQuestion extends Component {
 }
 
 export default SubmitQuestion
+
+
+
+// import React, { Component } from 'react'
+// import { Form, Checkbox } from 'semantic-ui-react'
+
+// export default class CheckboxExampleRadioGroup extends Component {
+//   state = {}
+//   handleChange = (e, { value }) => this.setState({ value })
+
+//   render() {
+//     return (
+//       <Form>
+//         <Form.Field>
+//           Selected value: <b>{this.state.value}</b>
+//         </Form.Field>
+//         <Form.Field>
+//           <Checkbox
+//             radio
+//             label='Choose this'
+//             name='checkboxRadioGroup'
+//             value='this'
+//             checked={this.state.value === 'this'}
+//             onChange={this.handleChange}
+//           />
+//         </Form.Field>
+//         <Form.Field>
+//           <Checkbox
+//             radio
+//             label='Or that'
+//             name='checkboxRadioGroup'
+//             value='that'
+//             checked={this.state.value === 'that'}
+//             onChange={this.handleChange}
+//           />
+//         </Form.Field>
+//       </Form>
+//     )
+//   }
+// }

@@ -6,7 +6,9 @@
     "question": "I'm somewhere where I don't know where I am!",
     "googled": true,
     "askedStudent": false,
-    "hasDebugged": true
+    "hasDebugged": true,
+    "contacted": false,
+    "completed": false
   },
   {
     "id": 2,
@@ -15,7 +17,9 @@
     "question": "JavaScript is haaaard.",
     "googled": true,
     "askedStudent": true,
-    "hasDebugged": false
+    "hasDebugged": false,
+    "contacted": false,
+    "completed": false
   },
   {
     "id": 3,
@@ -24,7 +28,9 @@
     "question": "What is an API????",
     "googled": true,
     "askedStudent": true,
-    "hasDebugged": true
+    "hasDebugged": true,
+    "contacted": false,
+    "completed": false
   },
   {
     "id": 4,
@@ -33,6 +39,8 @@
     "question": "Does anyone here know Ember!?",
     "googled": false,
     "askedStudent": false,
-    "hasDebugged": true
+    "hasDebugged": true,
+    "contacted": false,
+    "completed": false
   }
 ]
