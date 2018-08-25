@@ -11,23 +11,18 @@ class SubmitQuestion extends Component {
     hasDebugged: false
   }
 
-  handleInputChange = (e) => this.setState({ [e.target.name]: e.target.value })
-
-  handleCheckboxChange = (e) => {
-    e.target.type === 'checkbox'
-      ? this.setState({ [e.target.name]: e.target.checked })
-      : this.setState({ [e.target.previousSibling.name]: !e.target.previousSibling.checked })
-  }
+  handleInputChange = (e, { name, value }) => this.setState({ [name]: value })
+  handleCheckboxChange = (e, { name, checked }) => this.setState({ [name]: checked })
 
   render() {
     const { name, location, question, googled, askedStudent, hasDebugged } = this.state
-    const { handleInputChange, handleCheckboxChange } = this 
+    const { handleInputChange, handleCheckboxChange, handleSubmit } = this 
 
     return (
       <Fragment>
         <Header as="h2" content="Submit a Question" />
         <Segment>
-          <Form>
+          <Form onSubmit={handleSubmit} >
             <Form.Group widths='equal'>
               <Form.Input
                 fluid
@@ -53,7 +48,6 @@ class SubmitQuestion extends Component {
               value={question}
               onChange={handleInputChange}
             />
-            <Form.Group>
               <Checkbox 
                 label='Googled'
                 name='googled'
@@ -72,7 +66,6 @@ class SubmitQuestion extends Component {
                 checked={hasDebugged}
                 onChange={handleCheckboxChange}
               />
-            </Form.Group>
             <Form.Button>Submit</Form.Button>
           </Form>
         </Segment>
