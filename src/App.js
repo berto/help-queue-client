@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './App.css'
-import { Container, Grid, GridColumn } from 'semantic-ui-react'
+import { Grid } from 'semantic-ui-react'
 
 // Components
 import Header from './components/Header'

@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react'
-import { Header, Form, Segment, Checkbox } from 'semantic-ui-react'
+import { Header, Form, Segment, Checkbox, Message } from 'semantic-ui-react'
 
 class SubmitQuestion extends Component {
   state = {
@@ -10,7 +10,12 @@ class SubmitQuestion extends Component {
     askedStudent: false,
     hasDebugged: false,
     contacted: false,
-    completed: false
+    completed: false,
+    form: {
+      error: false,
+      success: false,
+      message: ''
+    }
   }
 
   handleInputChange = (e, { name, value }) => this.setState({ [name]: value })
@@ -18,14 +23,18 @@ class SubmitQuestion extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-    this.validateForm()
-      ? this.props.addQuestion(this.state)
+    let question = this.state
+    delete question.form
+    this.validForm()
+      ? this.props.addQuestion(question)
       : console.log('please fill out form correctly')
   }
 
-  validateForm = () => {
-    return this.state.googled === true || this.state.askedStudent === true || this.state.hasDebugged === true
-  }
+  validForm = () => Boolean(this.validateCheckboxes() && this.validateInputs())
+
+  validateCheckboxes = () => (this.state.googled || this.state.askedStudent || this.state.hasDebugged)
+
+  validateInputs = () => (this.state.name && this.state.location && this.state.question)
 
   resetForm() {
     this.setState({
@@ -42,13 +51,13 @@ class SubmitQuestion extends Component {
 
   render() {
     const { name, location, question, googled, askedStudent, hasDebugged } = this.state
-    const { handleInputChange, handleCheckboxChange, handleSubmit } = this 
+    const { handleInputChange, handleCheckboxChange, handleSubmit, validForm } = this 
 
     return (
       <Fragment>
         <Header as="h2" content="Submit a Question" />
         <Segment>
-          <Form onSubmit={handleSubmit} >
+          <Form onSubmit={handleSubmit} error={!validForm()} success={validForm()} >
             <Form.Group widths='equal'>
               <Form.Input
                 required
@@ -101,7 +110,16 @@ class SubmitQuestion extends Component {
                 onChange={handleCheckboxChange}
               />
             </Form.Field>
-            <Form.Button>Submit</Form.Button>
+            <Message
+              success
+              header='Form Completed'
+              content='Ready to submit' />
+            <Message
+              error
+              header='Form Incomplete'
+              content='Please check at least one box.'
+            />
+            <Form.Button disabled={!validForm()} color='teal'>Submit</Form.Button>
           </Form>
         </Segment>
       </Fragment>
