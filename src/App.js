@@ -38,9 +38,15 @@ class App extends Component {
     this.setState({questions: newQuestions, totalQuestions: newQuestions.length})
   }
 
+  addQuestion = (question) => {
+    question.id = this.state.totalQuestions + (Math.random() * 1000)
+    const newQuestions = this.state.questions.concat(question)
+    this.setState({ questions: newQuestions, totalQuestions: newQuestions.length, activeMenuItem: 'Questions' })
+  }
+
   render() {
     const { activeMenuItem, totalQuestions, questions, isLoaded } = this.state
-    const { handleMenuChange, removeQuestion } = this
+    const { handleMenuChange, removeQuestion, addQuestion } = this
 
     return (
       <div className="App">
@@ -54,7 +60,7 @@ class App extends Component {
             />
           </Grid.Column>
           <Grid.Column width={12}>
-            {activeMenuItem === "Submit" && <SubmitQuestion />}
+            {activeMenuItem === "Submit" && <SubmitQuestion addQuestion={addQuestion}/>}
             {activeMenuItem === "Questions" && (isLoaded ? <QuestionList questions={questions} removeQuestion={removeQuestion}/> : <Loader />)}
           </Grid.Column>
         </Grid>
