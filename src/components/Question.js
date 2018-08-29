@@ -13,7 +13,7 @@ const Question = ({ question, removeQuestion }) => {
         {askedStudent ? <Icon circular color='teal' name='talk' /> : <Icon circular name='talk' />}
         {hasDebugged ? <Icon circular color='teal' name='bug' /> : <Icon circular name='bug' />}
         <Button.Group floated="right">
-          <Button compact icon labelPosition='left' positive={!contacted}>
+          <Button compact icon labelPosition='left' positive={contacted}>
             <Icon name='right arrow' />
             Contacted
           </Button>
