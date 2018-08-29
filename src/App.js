@@ -28,14 +28,22 @@ class App extends Component {
   loadQuestions = () => (
     fetch(this.state.baseUrl)
       .then(res => res.json())
-      .then(({ data }) => this.setState({ questions: data, totalQuestions: data.length, isLoaded: true }))
+      .then(({ data }) => {
+        const questions = data.filter(question => !question.completed)
+        this.setState({ questions: questions, totalQuestions: questions.length, isLoaded: true })
+      })
   )
 
   handleMenuChange = (e, { name }) => this.setState({ activeMenuItem: name })
 
   removeQuestion = (id) => {
-    const newQuestions = this.state.questions.filter(question => question.id !== id)
-    this.setState({questions: newQuestions, totalQuestions: newQuestions.length})
+    fetch(`${this.state.baseUrl}/${id}`, {
+      method: 'DELETE'
+    })
+      .then(res => res.json())
+      .then(response => {
+        this.loadQuestions()
+      })
   }
 
   addQuestion = () => {
