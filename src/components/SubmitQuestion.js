@@ -18,9 +18,21 @@ class SubmitQuestion extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-    this.validForm()
-      ? this.props.addQuestion(this.state)
-      : console.log('please fill out form correctly')
+    this.validForm() && this.postQuestion(this.state)
+  }
+
+  postQuestion = (question) => {
+    fetch(this.props.baseUrl, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify(question)
+    })
+      .then(res => res.json())
+      .then(({ data }) => {
+        this.props.addQuestion(data)
+      })
   }
 
   validForm = () => Boolean(this.validateCheckboxes() && this.validateInputs())

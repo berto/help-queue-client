@@ -2,7 +2,7 @@ import React from 'react'
 import { Card, Icon, Button } from 'semantic-ui-react'
 
 const Question = ({ question, removeQuestion }) => {
-  const { id, name, location, googled, askedStudent, hasDebugged } = question
+  const { id, name, location, googled, askedStudent, hasDebugged, contacted } = question
   
   return (
     <Card>
@@ -13,7 +13,7 @@ const Question = ({ question, removeQuestion }) => {
         {askedStudent ? <Icon circular color='teal' name='talk' /> : <Icon circular name='talk' />}
         {hasDebugged ? <Icon circular color='teal' name='bug' /> : <Icon circular name='bug' />}
         <Button.Group floated="right">
-          <Button compact icon labelPosition='left'>
+          <Button compact icon labelPosition='left' positive={contacted}>
             <Icon name='right arrow' />
             Contacted
           </Button>

@@ -14,7 +14,7 @@ const apiUrl = 'https://shrike-queue.herokuapp.com/queue'
 
 class App extends Component {
   state = {
-    activeMenuItem: 'Submit',
+    activeMenuItem: 'Questions',
     totalQuestions: 0,
     questions: [],
     isLoaded: false,
@@ -38,14 +38,13 @@ class App extends Component {
     this.setState({questions: newQuestions, totalQuestions: newQuestions.length})
   }
 
-  addQuestion = (question) => {
-    question.id = this.state.totalQuestions + (Math.random() * 1000)
-    const newQuestions = this.state.questions.concat(question)
-    this.setState({ questions: newQuestions, totalQuestions: newQuestions.length, activeMenuItem: 'Questions' })
+  addQuestion = () => {
+    this.loadQuestions()
+    this.setState({ activeMenuItem: 'Questions' })
   }
 
   render() {
-    const { activeMenuItem, totalQuestions, questions, isLoaded } = this.state
+    const { activeMenuItem, totalQuestions, questions, isLoaded, baseUrl } = this.state
     const { handleMenuChange, removeQuestion, addQuestion } = this
 
     return (
@@ -60,7 +59,7 @@ class App extends Component {
             />
           </Grid.Column>
           <Grid.Column width={12}>
-            {activeMenuItem === "Submit" && <SubmitQuestion addQuestion={addQuestion}/>}
+            {activeMenuItem === "Submit" && <SubmitQuestion addQuestion={addQuestion} baseUrl={baseUrl} />}
             {activeMenuItem === "Questions" && (isLoaded ? <QuestionList questions={questions} removeQuestion={removeQuestion}/> : <Loader />)}
           </Grid.Column>
         </Grid>
