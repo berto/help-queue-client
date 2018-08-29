@@ -10,12 +10,7 @@ class SubmitQuestion extends Component {
     askedStudent: false,
     hasDebugged: false,
     contacted: false,
-    completed: false,
-    form: {
-      error: false,
-      success: false,
-      message: ''
-    }
+    completed: false
   }
 
   handleInputChange = (e, { name, value }) => this.setState({ [name]: value })
@@ -23,17 +18,13 @@ class SubmitQuestion extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault()
-    let question = this.state
-    delete question.form
     this.validForm()
-      ? this.props.addQuestion(question)
+      ? this.props.addQuestion(this.state)
       : console.log('please fill out form correctly')
   }
 
   validForm = () => Boolean(this.validateCheckboxes() && this.validateInputs())
-
   validateCheckboxes = () => (this.state.googled || this.state.askedStudent || this.state.hasDebugged)
-
   validateInputs = () => (this.state.name && this.state.location && this.state.question)
 
   resetForm() {
@@ -113,11 +104,12 @@ class SubmitQuestion extends Component {
             <Message
               success
               header='Form Completed'
-              content='Ready to submit' />
+              content='Ready to submit'
+            />
             <Message
               error
               header='Form Incomplete'
-              content='Please check at least one box.'
+              content='Please enter name, location, question, and check at least one box.'
             />
             <Form.Button disabled={!validForm()} color='teal'>Submit</Form.Button>
           </Form>

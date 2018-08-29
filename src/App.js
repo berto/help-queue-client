@@ -10,7 +10,7 @@ import QuestionList from './components/QuestionList'
 import SubmitQuestion from './components/SubmitQuestion'
 
 // API
-const apiUrl = '/questions.json'
+const apiUrl = 'https://shrike-queue.herokuapp.com/queue'
 
 class App extends Component {
   state = {
@@ -28,7 +28,7 @@ class App extends Component {
   loadQuestions = () => (
     fetch(this.state.baseUrl)
       .then(res => res.json())
-      .then(questions => this.setState({ questions: questions, totalQuestions: questions.length, isLoaded: true }))
+      .then(({ data }) => this.setState({ questions: data, totalQuestions: data.length, isLoaded: true }))
   )
 
   handleMenuChange = (e, { name }) => this.setState({ activeMenuItem: name })
