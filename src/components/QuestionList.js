@@ -4,8 +4,8 @@ import { Card, Header } from 'semantic-ui-react'
 // Components
 import Question from "./Question";
 
-const QuestionList = ({ questions, removeQuestion }) => {
-  const cards = questions.map(question => (<Question key={question.id} question={question} removeQuestion={removeQuestion}/>))
+const QuestionList = ({ questions, removeQuestion, toggleContacted }) => {
+  const cards = questions.map(question => (<Question key={question.id} question={question} removeQuestion={removeQuestion} toggleContacted={toggleContacted} />))
 
   return (
     <Fragment>

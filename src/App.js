@@ -30,6 +30,7 @@ class App extends Component {
       .then(res => res.json())
       .then(({ data }) => {
         const questions = data.filter(question => !question.completed)
+        console.log(questions)
         this.setState({ questions: questions, totalQuestions: questions.length, isLoaded: true })
       })
   )
@@ -51,9 +52,20 @@ class App extends Component {
     this.setState({ activeMenuItem: 'Questions' })
   }
 
+  toggleContacted = (id, contacted) => {
+    console.log(id, contacted)
+    fetch(`${this.state.baseUrl}/${id}`, {
+      method: 'PATCH',
+    })
+      .then(res => res.json())
+      .then(response => {
+        this.loadQuestions()
+      })
+  }
+
   render() {
     const { activeMenuItem, totalQuestions, questions, isLoaded, baseUrl } = this.state
-    const { handleMenuChange, removeQuestion, addQuestion } = this
+    const { handleMenuChange, removeQuestion, addQuestion, toggleContacted } = this
 
     return (
       <div className="App">
@@ -68,7 +80,7 @@ class App extends Component {
           </Grid.Column>
           <Grid.Column width={12}>
             {activeMenuItem === "Submit" && <SubmitQuestion addQuestion={addQuestion} baseUrl={baseUrl} />}
-            {activeMenuItem === "Questions" && (isLoaded ? <QuestionList questions={questions} removeQuestion={removeQuestion}/> : <Loader />)}
+            {activeMenuItem === "Questions" && (isLoaded ? <QuestionList questions={questions} removeQuestion={removeQuestion} toggleContacted={toggleContacted} /> : <Loader />)}
           </Grid.Column>
         </Grid>
       </div>
