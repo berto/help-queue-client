@@ -30,7 +30,6 @@ class App extends Component {
       .then(res => res.json())
       .then(({ data }) => {
         const questions = data.filter(question => !question.completed)
-        console.log(questions)
         this.setState({ questions: questions, totalQuestions: questions.length, isLoaded: true })
       })
   )
@@ -53,7 +52,6 @@ class App extends Component {
   }
 
   toggleContacted = (id, contacted) => {
-    console.log(id, contacted)
     fetch(`${this.state.baseUrl}/${id}`, {
       method: 'PATCH',
     })
