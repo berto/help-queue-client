@@ -8,7 +8,7 @@ class Sidebar extends Component {
     return (
       <React.Fragment>
         <Header as="h2" content="Navigation" />
-        <Menu vertical>
+        <Menu vertical fluid>
           <Menu.Item name='Questions' active={activeItem === 'Questions'} onClick={handleMenuChange}>
             <Label color='teal'>{totalQuestions}</Label>
             Questions
