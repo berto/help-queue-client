@@ -28,7 +28,7 @@
   to { transform: rotate(360deg); }
 }
 
-#loading-segment {
+.loading-segment {
   height: 100px;
 }
 

@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
+import React, { Component, Fragment } from 'react'
 import './App.css'
-import { Grid } from 'semantic-ui-react'
+import { Grid, Header } from 'semantic-ui-react'
 
 // Components
-import Header from './components/Header'
+import MainHeader from './components/Header'
 import Sidebar from './components/Sidebar'
 import Loader from './components/Loader'
 import QuestionList from './components/QuestionList'
@@ -67,7 +67,7 @@ class App extends Component {
 
     return (
       <div className="App">
-        <Header />
+        <MainHeader />
         <Grid stackable container>
           <Grid.Column width={4}>
             <Sidebar 
@@ -78,7 +78,7 @@ class App extends Component {
           </Grid.Column>
           <Grid.Column width={12}>
             {activeMenuItem === "Submit" && <SubmitQuestion addQuestion={addQuestion} baseUrl={baseUrl} />}
-            {activeMenuItem === "Questions" && (isLoaded ? <QuestionList questions={questions} removeQuestion={removeQuestion} toggleContacted={toggleContacted} /> : <Loader />)}
+            {activeMenuItem === "Questions" && (isLoaded ? <QuestionList questions={questions} removeQuestion={removeQuestion} toggleContacted={toggleContacted} /> : <Fragment><Header as="h2" content="Questions" /><Loader /></Fragment>)}
           </Grid.Column>
         </Grid>
       </div>

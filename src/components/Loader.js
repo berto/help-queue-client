@@ -1,10 +1,12 @@
 import React from 'react'
-import { Dimmer, Loader } from 'semantic-ui-react'
+import { Dimmer, Loader, Segment } from 'semantic-ui-react'
 
 const QuestionLoader = () => (
-  <Dimmer inverted active>
-    <Loader inverted content='Loading' />
-  </Dimmer>
+  <Segment className='loading-segment'>
+    <Dimmer inverted active>
+      <Loader inverted content='Loading' />
+    </Dimmer>
+  </Segment> 
 )
 
 export default QuestionLoader
