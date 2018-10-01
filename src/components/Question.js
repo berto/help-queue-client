@@ -12,7 +12,7 @@ class Question extends Component {
   }
    
   render() {
-    const { question, removeQuestion, toggleContacted } = this.props
+    const { question, toggleContacted } = this.props
     const { id, name, location, googled, askedStudent, hasDebugged, contacted } = question
 
     return (
