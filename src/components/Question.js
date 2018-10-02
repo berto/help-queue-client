@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
-import { Card, Icon, Button, Modal, Header } from 'semantic-ui-react'
+import { Card, Icon, Button } from 'semantic-ui-react'
+
+// Components
+import ConfirmationModal from "./ConfirmationModal";
 
 class Question extends Component {
   state = { modalOpen: false }
@@ -12,6 +15,8 @@ class Question extends Component {
   }
    
   render() {
+    const { modalOpen } = this.state
+    const { handleComplete, handleClose } = this
     const { question, toggleContacted } = this.props
     const { id, name, location, googled, askedStudent, hasDebugged, contacted } = question
 
@@ -34,27 +39,12 @@ class Question extends Component {
             </Button>
           </Button.Group>
         </Card.Content>
-        
-        <Modal
-          open={this.state.modalOpen}
-          onClose={this.handleClose}
-          size='small'
-        >
-          <Header icon='warning sign' content='Confirm Completion' />
-          <Modal.Content>
-            <h3>Are you sure this question has been completed?</h3>
-          </Modal.Content>
-          <Modal.Actions>
-            <Button color='red' onClick={this.handleClose} inverted>
-              <Icon name='undo' />
-              Abort
-            </Button>
-            <Button color='green' onClick={() => this.handleComplete(id)} inverted>
-              <Icon name='checkmark' />
-              Yup
-            </Button>
-          </Modal.Actions>
-        </Modal>
+        <ConfirmationModal
+          modalOpen={modalOpen}
+          handleClose={handleClose}
+          handleComplete={handleComplete}
+          id={id}
+        />
       </Card>
     )
   }
