@@ -35,3 +35,8 @@
 h1 {
   color: orange;
 }
+
+.timestamp {
+  float: right;
+  color: rgba(0,0,0,.4);
+}
