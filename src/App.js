@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import './App.css'
 import { Grid, Header } from 'semantic-ui-react'
+import { Router, Link } from "@reach/router"
 
 // Components
 import MainHeader from './components/Header'
@@ -77,8 +78,11 @@ class App extends Component {
             />
           </Grid.Column>
           <Grid.Column width={12}>
-            {activeMenuItem === "Submit" && <SubmitQuestion addQuestion={addQuestion} baseUrl={baseUrl} />}
-            {activeMenuItem === "Questions" && (isLoaded ? <QuestionList questions={questions} removeQuestion={removeQuestion} toggleContacted={toggleContacted} /> : <Fragment><Header as="h2" content="Questions" /><Loader /></Fragment>)}
+             {!isLoaded && <Fragment><Header as="h2" content="Questions" /><Loader /></Fragment>}
+            <Router>
+              {isLoaded && <QuestionList path='/' questions={questions} removeQuestion={removeQuestion} toggleContacted={toggleContacted} />}
+              <SubmitQuestion path='/submit' addQuestion={addQuestion} baseUrl={baseUrl} />
+            </Router>
           </Grid.Column>
         </Grid>
       </div>
