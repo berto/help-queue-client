@@ -4,7 +4,7 @@ An application to enable students in the Galvanize WDI program to queue up for h
 
 ## Technologies
 
-HTML, CSS, JavaScript, React, Semantic-UI-React, Surge
+HTML, CSS, JavaScript, React, Semantic-UI-React, Moment.js, Surge
 
 ## Back-End
 
@@ -13,7 +13,6 @@ HTML, CSS, JavaScript, React, Semantic-UI-React, Surge
 
 ## Future Implementations
 
-* Timestamps (moment.js)
 * Websockets integration for live updates to queue (socket.io)
 * Routing (react-router or reach-router)
 
