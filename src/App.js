@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import './App.css'
 import { Grid, Header } from 'semantic-ui-react'
+import uuid from 'uuid/v4'
 
 // Components
 import MainHeader from './components/Header'
@@ -10,7 +11,22 @@ import QuestionList from './components/QuestionList'
 import SubmitQuestion from './components/SubmitQuestion'
 
 // API
-const apiUrl = 'https://shrike-queue.herokuapp.com/queue'
+const host = 'shrike-queue.heroku.com'
+const apiUrl = `https://${host}/queue`
+
+// Websocket
+let socket = { readyState: 3 }
+if ('WebSocket' in window) {
+  socket = new WebSocket(`wss://${host}/ws`)
+}
+
+// Notification
+const clientId = uuid()
+const logo = './galvanize.png'
+let notificationStatus = 'none'
+if ('Notification' in window) {
+  notificationStatus = localStorage.notify || Notification.permission
+}
 
 class App extends Component {
   state = {
@@ -18,11 +34,50 @@ class App extends Component {
     totalQuestions: 0,
     questions: [],
     isLoaded: false,
-    baseUrl: apiUrl
+    baseUrl: apiUrl,
+    socket,
+    notificationStatus,
+    stopNotification: false
   }
 
   componentDidMount() {
     this.loadQuestions()
+    this.requestNotification()
+    this.setUpSocket()
+  }
+
+  setUpSocket = () => {
+    this.setState((prevState) => {
+      prevState.socket.onmessage = (message) => {
+        const data = JSON.parse(message.data)
+        this.loadQuestions()
+        if (this.state.notificationStatus === 'granted' && data.clientId !== clientId && !data.preventNotification && !this.state.stopNotification) {
+          new Notification(`${data.name}: ${data.question}`, {icon: logo})
+        }
+      }
+      return prevState
+    })
+  }
+
+  requestNotification = () => {
+    if (this.state.notificationStatus === 'none') {
+      this.state.setState({ stopNotification: true })
+    } else if (this.state.notificationStatus === 'default') {
+      Notification.requestPermission()
+        .then((notificationStatus) => {
+          this.setState({ notificationStatus })
+        })
+    }
+  }
+
+  toggleNotification = (granted) => {
+    if (granted) {
+      localStorage.setItem('notify', 'denied')
+      this.setState({ notificationStatus: 'denied'})
+    } else {
+      localStorage.setItem('notify', 'granted')
+      this.setState({ notificationStatus: 'granted' })
+    }
   }
 
   loadQuestions = () => (
@@ -41,12 +96,20 @@ class App extends Component {
       method: 'DELETE'
     })
       .then(res => res.json())
-      .then(response => {
+      .then(() => {
+        if (this.state.socket.readyState === 1) {
+          this.state.socket.send(JSON.stringify({ preventNotification: true }))
+        }
         this.loadQuestions()
       })
   }
 
-  addQuestion = () => {
+  addQuestion = (data) => {
+    if (this.state.socket.readyState === 1) {
+      let message = data[0]
+      message.clientId = clientId
+      this.state.socket.send(JSON.stringify(message))
+    }
     this.loadQuestions()
     this.setState({ activeMenuItem: 'Questions' })
   }
@@ -56,18 +119,21 @@ class App extends Component {
       method: 'PATCH',
     })
       .then(res => res.json())
-      .then(response => {
+      .then(() => {
+        if (this.state.socket.readyState === 1) {
+          this.state.socket.send(JSON.stringify({ preventNotification: true }))
+        }
         this.loadQuestions()
       })
   }
 
   render() {
-    const { activeMenuItem, totalQuestions, questions, isLoaded, baseUrl } = this.state
-    const { handleMenuChange, removeQuestion, addQuestion, toggleContacted } = this
+    const { activeMenuItem, totalQuestions, questions, isLoaded, baseUrl, notificationStatus, stopNotification } = this.state
+    const { handleMenuChange, removeQuestion, addQuestion, toggleContacted, toggleNotification } = this
 
     return (
       <div className="App">
-        <MainHeader />
+        <MainHeader stopNotification={stopNotification} notificationStatus={notificationStatus} toggleNotification={toggleNotification} />
         <Grid stackable container>
           <Grid.Column width={4}>
             <Sidebar 
